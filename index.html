@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#07111e"><meta name="description" content="Simulación inmersiva de compras y abastecimiento: datos digitales, coordinación organizacional, requisiciones y programación de requerimientos."><meta name="color-scheme" content="dark">
 <title>NEXUS | Operación Abastecimiento</title>
-<link rel="stylesheet" href="./styles.css?v=nexus-field-manual-2">
+<link rel="stylesheet" href="./styles.css?v=nexus-immersive-lab-3">
 </head>
 <body>
 <div id="loginGate" class="nexus-login-gate" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
@@ -77,7 +77,7 @@
  </div>
 
  <section class="nexus-progression" id="nexusProgression">
-  <div class="nexus-hero-visual" aria-hidden="true"><div class="nexus-cube"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+  <div class="nexus-hero-visual medal-hero-visual" aria-hidden="true"><div class="holo-medal"><div class="medal-orbit orbit-a"></div><div class="medal-orbit orbit-b"></div><div class="medal-ribbon"></div><div class="medal-face"><span class="medal-star">✦</span><b>NX</b><small>PROCUREMENT</small><span class="medal-laurel">❧ ✧ ❧</span></div><span class="medal-spark spark-a">✦</span><span class="medal-spark spark-b">✧</span><span class="medal-spark spark-c">✦</span></div></div>
   <div class="progression-top"><div><div class="eyebrow">CAMPAÑA OPERATIVA · SISTEMA DE NIVELES</div><h3 class="progression-title">Tu ruta hacia Procurement Specialist</h3><p class="progression-sub">No solo contestes: desbloquea sectores, resuelve incidencias y demuestra que puedes mantener la cadena de suministro en movimiento.</p></div><div class="rank-emblem" aria-label="Insignia de cadete"><span>01</span></div><div class="rank-chip" id="progressionRank">RANGO 01 · CADETE</div></div>
   <div class="progression-body"><div class="stage-track" id="progressionStages" aria-label="Etapas de la campaña"></div><div class="progression-side"><div class="progression-percent" id="progressionPercent">00%</div><p id="progressionSummary">Tu operación comienza en el centro de control.</p><div class="progression-bar"><span id="progressionFill" style="width:0%"></span></div></div></div>
   <div class="progression-next"><div class="progression-next-copy"><b id="progressionNextTitle">Siguiente objetivo: iniciar el briefing</b><span id="progressionNextDesc">Lee el expediente y valida los datos antes de tomar decisiones.</span></div><button class="progression-action" id="progressionNextBtn" onclick="resumeMission()">INICIAR OPERACIÓN ↗</button></div>
@@ -92,6 +92,27 @@
   <article class="home-module home-manual-shortcut"><div class="home-module-top"><span class="module-icon">⌘</span><span class="module-state">BIBLIOTECA DE CLASE</span></div><h4>Manual de campo NEXUS</h4><p>Notas explicadas, ejemplos, ejercicios guiados y referencias por apartado.</p><button onclick="openFieldManual()">ABRIR MANUAL <b>↗</b></button></article>
  </div>
 
+ 
+ <section class="supply-map-section" id="supplyMap">
+  <div class="immersive-section-head"><div><div class="eyebrow">INTERACTIVE SUPPLY NETWORK · 3D VIEW</div><h3>Mapa 3D de la cadena de suministro</h3><p>Selecciona un nodo de la red para conocer qué información necesita, qué decisiones toma y qué puede bloquear el flujo. Sigue el movimiento desde la demanda hasta la entrega.</p></div><span class="immersive-status">NETWORK ONLINE</span></div>
+  <div class="supply-map-layout"><div class="supply-map-canvas" role="group" aria-label="Mapa interactivo de la cadena de suministro">
+   <div class="map-grid-floor"></div><svg class="supply-connections" viewBox="0 0 700 430" aria-hidden="true"><path d="M350 75 L175 160 L100 280 M350 75 L525 160 L600 280 M175 160 L350 250 L525 160 M100 280 L350 365 L600 280 M350 250 L350 365" /><path class="flow-path" d="M350 75 L175 160 L350 250 L525 160 L600 280 L350 365 L100 280" /></svg>
+   <button class="map-node node-production selected" data-map-node="production" onclick="selectSupplyNode('production')"><span class="node-glyph">▥</span><b>Producción</b><small>Demanda y fecha</small></button>
+   <button class="map-node node-planning" data-map-node="planning" onclick="selectSupplyNode('planning')"><span class="node-glyph">⌘</span><b>Planeación / MRP</b><small>Necesidad neta</small></button>
+   <button class="map-node node-purchasing" data-map-node="purchasing" onclick="selectSupplyNode('purchasing')"><span class="node-glyph">⇄</span><b>Compras</b><small>Proveedor y orden</small></button>
+   <button class="map-node node-finance" data-map-node="finance" onclick="selectSupplyNode('finance')"><span class="node-glyph">$</span><b>Finanzas</b><small>Presupuesto</small></button>
+   <button class="map-node node-warehouse" data-map-node="warehouse" onclick="selectSupplyNode('warehouse')"><span class="node-glyph">▤</span><b>Almacén</b><small>Recepción y stock</small></button>
+   <button class="map-node node-supplier" data-map-node="supplier" onclick="selectSupplyNode('supplier')"><span class="node-glyph">◈</span><b>Proveedor</b><small>Plazo y confirmación</small></button>
+   <div class="map-core"><span>NX</span><small>FLUJO DE MATERIAL</small></div>
+  </div><aside class="map-detail-card"><div class="eyebrow" id="mapDetailEyebrow">NODO 01 · DEMANDA</div><h4 id="mapDetailTitle">Producción</h4><p id="mapDetailText">Define qué se necesita, en qué cantidad y para cuándo. Una fecha poco clara puede distorsionar todo el plan de abastecimiento.</p><div class="map-detail-label">DATOS QUE DEBES VALIDAR</div><ul id="mapDetailList"><li>Demanda confirmada</li><li>Fecha requerida</li><li>Prioridad operativa</li></ul><div class="map-detail-label">PREGUNTA DE CONTROL</div><p id="mapDetailQuestion">¿La necesidad está documentada y autorizada?</p><button class="btn primary" onclick="openFieldManual('manual-33')">CONSULTAR MANUAL ↗</button></aside></div>
+  <div class="map-legend"><span><i class="legend-dot dot-demand"></i> Demanda</span><span><i class="legend-dot dot-data"></i> Datos / planeación</span><span><i class="legend-dot dot-decision"></i> Decisión</span><span><i class="legend-dot dot-flow"></i> Material y recepción</span></div>
+ </section>
+ <section class="branching-lab" id="branchingLab">
+  <div class="immersive-section-head"><div><div class="eyebrow">DECISION LAB · BRANCHING CASES</div><h3>Casos ramificados: cada decisión mueve la operación</h3><p>Resuelve tres casos breves. La elección abre una consecuencia y una pregunta de seguimiento; al terminar podrás comparar tus decisiones de los casos 1, 2 y 3. No hay un mensaje de “todo salió mal”: la retroalimentación explica qué ocurrió y qué dato conviene revisar.</p></div><span class="immersive-status">3 CASE FILES</span></div>
+  <div class="branch-progress"><span id="branchProgressLabel">CASO 01 DE 03</span><div><i id="branchProgressFill" style="width:0%"></i></div><span id="branchScoreLabel">0 decisiones</span></div>
+  <article class="branch-case-card" id="branchCaseCard"><div class="branch-case-kicker" id="branchCaseKicker">CASE FILE · NX-01</div><h4 id="branchCaseTitle">La fecha que nadie confirma</h4><p id="branchCaseScenario">Producción necesita el material pronto. El proveedor habitual no confirma la entrega y el alternativo cobra más.</p><div class="branch-data-pills" id="branchCaseData"></div><div class="branch-options" id="branchCaseOptions"></div><div class="branch-consequence" id="branchConsequence" aria-live="polite" hidden></div><div class="branch-case-actions"><button class="btn" id="branchRetryBtn" onclick="retryBranchCase()" hidden>REVISAR OTRA ALTERNATIVA</button><button class="btn primary" id="branchNextBtn" onclick="nextBranchCase()" disabled>CONTINUAR AL SIGUIENTE CASO ↗</button></div></article>
+  <div class="branch-comparison" id="branchComparison" hidden><div class="eyebrow">DEBRIEF · COMPARATIVO DE DECISIONES</div><h4>Comparativo de casos 1, 2 y 3</h4><p>Compara la decisión que tomaste, su efecto principal y la recomendación para una operación real.</p><div class="branch-comparison-grid" id="branchComparisonGrid"></div><button class="btn primary" onclick="resetBranchLab()">REPETIR LOS TRES CASOS ↻</button></div>
+ </section>
  <section class="nexus-live-ops" id="liveOperations">
   <div class="live-ops-head"><div><div class="eyebrow">SIMULADOR COMPLEMENTARIO · PRÁCTICA DE DECISIONES</div><h3>Centro de incidentes en vivo</h3><p><b>¿Para qué sirve?</b> Es un laboratorio de práctica independiente de los 30 retos: puedes usarlo antes de empezar para familiarizarte con las decisiones o al terminar para comparar estrategias con tu equipo. Resuelve tres incidentes y observa cómo afectan continuidad, presupuesto, calidad y riesgo. Los indicadores son didácticos, no datos de una planta real.</p><div class="role-badge" id="activeRoleBadge">ROL · JEFATURA DE COMPRAS</div><button class="manual-inline-link" onclick="openFieldManual('manual-incidents')">CONSULTAR GUÍA DE INCIDENTES ↗</button></div><span class="ops-chip"><i class="live-dot"></i> SIMULACIÓN</span></div>
   <div class="incident-guide"><b>¿Cómo se usa este centro?</b><span>01 · Lee el caso</span><span>02 · Compara las consecuencias</span><span>03 · Elige una acción</span><span>04 · Revisa la retroalimentación y la bitácora</span></div>
@@ -157,5 +178,5 @@
 </div>
 </main></div><footer class="foot">NEXUS Worldwide · NEXUS Procurement · Unidad 3 · Simulación académica. Los datos de AquaMotion son ficticios y se usan exclusivamente con fines didácticos.</footer>
 </div>
-<script src="./app.js?v=nexus-field-manual-2" defer></script>
+<script src="./app.js?v=nexus-immersive-lab-3" defer></script>
 </body></html>
