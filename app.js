@@ -280,6 +280,38 @@ function resetBranchLab(){branchState={index:0,answers:[],revealed:false,attempt
 selectSupplyNode("production");renderBranchCase();
 /* Faculty review tools: answer key, student preview and portable submissions. */
 let facultyPreviewSnapshot=null;
+
+const facultyModelResponses={
+0:"El MRP calcula los requerimientos de materiales con base en demanda, lista de materiales (BOM), inventario y recepciones; el ERP integra procesos y registros entre áreas. El ERP puede incluir al MRP como módulo de planeación.",
+1:"Hay 70 rodamientos físicos menos 20 reservados: quedan 50 libres hoy. Si la recepción de 30 está confirmada y llega a tiempo, hay 80 unidades disponibles para calcular el requerimiento. Si no se confirma o llega tarde, no se cuenta.",
+3:"El área técnica valida la especificación y la compatibilidad del rodamiento. Compras cotiza y compara alternativas equivalentes por costo total y plazo. Finanzas revisa presupuesto y autorización; Almacén confirma la existencia y el estado del material.",
+4:"Primero concilio el inventario y confirmo el stock libre. Después confirmo con el proveedor la fecha de entrega. Si no alcanza la fecha requerida, comparo una alternativa y escalo el riesgo, validando presupuesto y autorización antes de comprometer la compra.",
+5:"La requisición debe indicar código o especificación verificable, cantidad y unidad, fecha requerida, justificación de la necesidad, área solicitante y centro de costo. Se adjunta ficha técnica o evidencia del equipo y se obtiene la autorización aplicable.",
+8:"Parto de la fecha requerida de material disponible para Producción y calculo hacia atrás considerando el plazo y la duración de cada etapa: revisión técnica, aprobación, compra, entrega, recepción e inspección. Confirmo el calendario de días hábiles y la fecha real del proveedor.",
+9:"Comparo el costo total y cualquier sobrecosto con el riesgo de paro y la continuidad de producción. Verifico compatibilidad y especificación, capacidad y fecha confirmada del proveedor alterno, y solicito autorización y presupuesto aprobados antes de comprometer la compra.",
+10:"Conciliaría los movimientos y las ubicaciones del ERP y WMS; investigaría las reservas, piezas bloqueadas y la recepción duplicada. Documentaría la discrepancia y confirmaría el stock utilizable o stock libre mediante verificación física antes de recalcular.",
+11:"La ruta es: demanda o plan de producción + lista de materiales (BOM) + inventario y recepciones válidas → cálculo neto de requerimientos por MRP → revisión de excepciones y aprobación → orden de compra y seguimiento de entrega y recepción.",
+14:"Usaría entregas a tiempo como indicador de servicio, variación de costo contra presupuesto y calidad de recepción junto con el número de compras urgentes y el tiempo de ciclo. Cada indicador debe tener fórmula, periodo, fuente y responsable.",
+15:"Defino responsables por etapa, entradas que entrega cada área y los entregables que debe recibir la siguiente. Establezco puntos de validación y aprobación, así como un registro con trazabilidad de cada decisión, responsable y fecha.",
+16:"Activo el procedimiento de urgencia autorizado; documento la necesidad y su impacto, obtengo la aprobación correspondiente y registro cotizaciones y evidencia. Defino seguimiento, una alternativa de suministro y una fecha límite para confirmar la entrega.",
+17:"Comparo el costo total, el plazo de entrega, calidad y especificación, confiabilidad del proveedor y riesgo de paro. Verifico garantías y transporte, así como autorización y presupuesto. La alternativa recomendada debe cumplir los requisitos técnicos y la fecha crítica.",
+18:"Primero identifico el código y la ubicación del material. Reviso reservas, estado, bloqueos y movimientos, y hago una conciliación entre el registro y la existencia física. Asigno un responsable para actualizar el registro y dejar trazabilidad.",
+19:"El componente crítico se entregará tarde y existe riesgo e impacto de paro. Las alternativas son confirmar un proveedor alterno o reprogramar el lote. Solicito autorización para comparar y activar la alternativa antes de la fecha límite indicada, con responsable y seguimiento.",
+20:"La requisición es una solicitud interna que describe y justifica la necesidad. La orden de compra formaliza las condiciones de adquisición con el proveedor y se emite por personal autorizado después de las revisiones y aprobaciones aplicables.",
+21:"La especificación debe describir uso y aplicación en el equipo, material, talla, dimensiones o desempeño medible, estándar aplicable y criterios de aceptación verificables. El área técnica valida los requisitos para comparar ofertas equivalentes.",
+22:"Adjunto código o modelo del equipo, placa o identificación de la pieza, ficha técnica o manual, fotografías identificables y la validación del área técnica o responsable. La evidencia debe corresponder al equipo real y quedar asociada a la requisición.",
+23:"Priorizo seguridad y continuidad, la fecha requerida y las consecuencias de un retraso. Aplico criterios objetivos y documentados, identifico el riesgo operativo y escalo los conflictos de prioridad para obtener una decisión autorizada.",
+26:"El requerimiento neto es 130 unidades. Si el múltiplo de compra de 50 es obligatorio, la cantidad debe redondearse a 150, lo que genera un excedente de 20 unidades. Antes de emitir, valido costo, inventario, impacto del excedente y autorización.",
+27:"La referencia es la fecha requerida por Producción: el material debe estar disponible y liberado para uso ese día. Se planea hacia atrás descontando cada plazo y etapa de aprobación, compra, entrega y recepción.",
+28:"Detengo la compra afectada y pido a Ingeniería validar la versión vigente de la lista de materiales (BOM). Actualizo y valido los datos maestros, recalculo el MRP y documento el cambio antes de emitir la orden.",
+29:"Primero valido especificación y cantidad. Calculo costo total y riesgo de retraso o paro, confirmo presupuesto y aprobación, y comparo al proveedor con su plazo y entrega confirmada. Después asigno responsables, mantengo seguimiento de la confirmación y verifico la recepción.",
+30:"El requerimiento neto es de 130 rodamientos. Primero confirmo inventario utilizable y la fecha requerida; después pido al proveedor habitual una fecha confirmada y comparo la alternativa por costo total, plazo y riesgo. Documentaré la contingencia, solicitaré autorización de presupuesto y asignaré un responsable y fecha límite de seguimiento.",
+31:"La demanda bruta es 100 bombas × 4 tornillos = 400. Hay 500 tornillos físicos, pero 100 están reservados, por lo que el stock utilizable es 400. Con stock de seguridad de 40 y sin recepciones confirmadas: requerimiento nuevo = 400 + 40 − 400 = 40 tornillos.",
+32:"Proveedor A: 100 × $120 + $600 de flete = $12600; su plazo es 8 días. Proveedor B: 100 × $128 con flete incluido = $12800; su plazo es 4 días. La diferencia es $200. Recomiendo B si confirma la fecha de entrega, porque llega dentro de los 5 días requeridos; debo documentar el riesgo y obtener autorización.",
+33:"Requisición: rodamiento compatible con la bomba crítica, con código y especificación validados por el área técnica; cantidad y unidad definidas; fecha requerida mañana a las 14:00; justificación: evitar la interrupción de mantenimiento/producción; área solicitante: Mantenimiento; centro de costo y aprobador identificados. Adjuntaría placa/modelo, fotografía y ficha técnica antes de cotizar.",
+34:"Se recibieron 92 rodamientos y 8 están dañados: 92 − 8 = 84 unidades utilizables. Producción necesita 95, así que la brecha es 95 − 84 = 11. Registro la discrepancia, documento la evidencia, segrego el material no conforme, notifico al proveedor y áreas internas, y acuerdo reposición o contingencia con fecha confirmada."
+};
+
 function facultyScenarioAnswerKey(v){
  const bearingFree=v.bearingPhysical-v.bearingReserved,screwFree=v.screwPhysical-v.screwReserved,coverFree=v.coverPhysical-v.coverReserved;
  const bearingNet=Math.max(0,v.bearingNeed+v.bearingSafety-bearingFree-v.bearingIncoming),bearingNoReceipt=Math.max(0,v.bearingNeed+v.bearingSafety-bearingFree);
@@ -296,8 +328,8 @@ function facultyChallengeKey(m,i){
  let answer="";
  if(m.kind==="mc")answer='<p class="faculty-key-answer"><b>Respuesta:</b> '+String.fromCharCode(65+Number(m.correct))+'. '+esc(m.opts[Number(m.correct)]||"")+'</p>';
  else if(m.kind==="number")answer='<p class="faculty-key-answer"><b>Resultado numérico esperado:</b> '+esc(m.correct)+'</p>';
- else if(m.kind==="form")answer='<p class="faculty-key-answer"><b>Campos que debe completar:</b> '+(m.fields||[]).map(f=>esc(f.label)).join("; ")+'.</p>';
- else if(m.kind==="text"){const groups=(m.responseRule&&m.responseRule.groups)||[];answer='<p class="faculty-key-answer"><b>Elementos esperados:</b></p><ul class="faculty-rubric-list">'+groups.map(g=>'<li>'+esc(g.label)+'</li>').join("")+'</ul>';}
+ else if(m.kind==="form")answer='<div class="faculty-model-response"><b>Ejemplo de requisición completa</b><p>Material: Rodamiento modelo 6204-2RS compatible con AM-40, validado técnicamente. Cantidad: 130 piezas. Fecha requerida: 16/11/2026. Justificación: evitar interrupción de producción. Área: Mantenimiento; centro de costo MTTO-04. Adjuntar placa, fotografía y ficha técnica, y obtener autorización antes de comprar.</p></div><p class="faculty-key-answer"><b>Campos que debe completar:</b> '+(m.fields||[]).map(f=>esc(f.label)).join("; ")+'.</p>';
+ else if(m.kind==="text"){const groups=(m.responseRule&&m.responseRule.groups)||[];const sample=facultyModelResponses[i]||"";answer=(sample?'<div class="faculty-model-response"><b>Respuesta modelo sugerida</b><p>'+esc(sample)+'</p></div>':"")+'<p class="faculty-key-answer"><b>Elementos esperados:</b></p><ul class="faculty-rubric-list">'+groups.map(g=>'<li>'+esc(g.label)+'</li>').join("")+'</ul>';}
  const why=m.why?'<p><b>Respuesta de referencia / criterio:</b> '+esc(m.why)+'</p>':"";
  const hint=m.hint?'<p class="faculty-key-hint"><b>Pista para retroalimentar:</b> '+esc(m.hint)+'</p>':"";
  return '<details class="faculty-answer-row" data-faculty-search="'+esc((String(i+1)+" "+m.topic+" "+m.title+" "+(m.q||"")+" "+(m.why||"")+" "+(m.hint||"")).toLowerCase())+'"><summary><span class="faculty-answer-num">'+String(i+1).padStart(2,"0")+'</span><span><b>'+esc(m.title)+'</b><small>'+esc(m.topic)+' · '+(m.kind==="text"?"Respuesta escrita":m.kind==="number"?"Cálculo numérico":m.kind==="form"?"Formato práctico":"Opción múltiple")+'</small></span><span class="faculty-key-plus">＋</span></summary><div class="faculty-answer-body"><p><b>Consigna:</b> '+esc(m.q||"Completar el formato solicitado.")+'</p>'+answer+why+hint+'</div></details>';
@@ -313,23 +345,43 @@ function renderInstructorConsole(){
  document.getElementById("instructorConsole").style.display="block";
  document.getElementById("scenarioCards").innerHTML=scenarioVariants.map((v,i)=>{
   const code=i+1;
-  return '<article class="scenario-card"><div class="case-id">CASE FILE · NX-'+String(code).padStart(2,"0")+'</div><h3>Escenario '+String(code).padStart(2,"0")+' · '+esc(v.label)+'</h3><p><span class="scenario-chip">DEMANDA '+v.demand+' BOMBAS</span> <span class="scenario-chip">FECHA '+esc(v.required)+'</span></p><ul><li>Proveedor habitual: '+esc(v.supplier)+' · '+v.normalDays+' días.</li><li>Alternativa: '+esc(v.altSupplier)+' · '+v.altDays+' días · +'+v.altPremium+'%.</li><li>Rodamientos: necesidad '+v.bearingNeed+'; físico '+v.bearingPhysical+', reservado '+v.bearingReserved+', entrada '+v.bearingIncoming+', seguridad '+v.bearingSafety+'.</li><li>Tornillos: necesidad '+v.screwNeed+'; físico '+v.screwPhysical+', reservado '+v.screwReserved+', seguridad '+v.screwSafety+'.</li><li>Tapas: necesidad '+v.coverNeed+'; físico '+v.coverPhysical+', reservado '+v.coverReserved+', entrada '+v.coverIncoming+', seguridad '+v.coverSafety+'.</li></ul><div class="scenario-card-actions"><button class="btn primary" onclick="startFacultyPreview('+code+')">VER COMO ALUMNO ↗</button></div>'+facultyScenarioAnswerKey(v)+'</article>';
+  return '<article class="scenario-card"><div class="case-id">CASE FILE · NX-'+String(code).padStart(2,"0")+'</div><h3>Escenario '+String(code).padStart(2,"0")+' · '+esc(v.label)+'</h3><p><span class="scenario-chip">DEMANDA '+v.demand+' BOMBAS</span> <span class="scenario-chip">FECHA '+esc(v.required)+'</span></p><ul><li>Proveedor habitual: '+esc(v.supplier)+' · '+v.normalDays+' días.</li><li>Alternativa: '+esc(v.altSupplier)+' · '+v.altDays+' días · +'+v.altPremium+'%.</li><li>Rodamientos: necesidad '+v.bearingNeed+'; físico '+v.bearingPhysical+', reservado '+v.bearingReserved+', entrada '+v.bearingIncoming+', seguridad '+v.bearingSafety+'.</li><li>Tornillos: necesidad '+v.screwNeed+'; físico '+v.screwPhysical+', reservado '+v.screwReserved+', seguridad '+v.screwSafety+'.</li><li>Tapas: necesidad '+v.coverNeed+'; físico '+v.coverPhysical+', reservado '+v.coverReserved+', entrada '+v.coverIncoming+', seguridad '+v.coverSafety+'.</li></ul><div class="scenario-card-actions"><button class="btn primary" onclick="startFacultyPreview('+code+')">VER COMO ALUMNO ↗</button>'+(code===1?'<button class="btn faculty-solved-preview" onclick="startFacultyPreview(1,true)">VER ALUMNO 01 · TODO RESUELTO</button>':'')+'</div>'+facultyScenarioAnswerKey(v)+'</article>';
  }).join("");
  renderFacultyAnswerLibrary();
  window.scrollTo({top:0,behavior:"smooth"});
 }
-function startFacultyPreview(code){
+function startFacultyPreview(code,solved=false){
  if(facultyPreviewSnapshot)exitFacultyPreview();
  facultyPreviewSnapshot={state:JSON.parse(JSON.stringify(state)),storage:localStorage.getItem("nexus_u3_state"),instructorStyle:document.getElementById("instructorConsole").style.display};
  const n=Math.max(1,Math.min(8,Number(code)||1));
  window.__nexusFacultyPreview=true;
- state={name:"PREVISUALIZACIÓN DOCENTE",group:"Prueba docente · Escenario "+String(n).padStart(2,"0"),studentCode:n,scenarioId:n-1,started:true,current:-2,unlocked:0,answers:{},attempts:{},passed:{},responses:{},startedAt:new Date().toISOString(),ops:{continuity:70,budget:70,quality:70,risk:70,events:{},log:[],scenarioApplied:false}};
+ state={name:solved?"ALUMNO 01 · EJEMPLO RESUELTO":"PREVISUALIZACIÓN DOCENTE",group:"Prueba docente · Escenario "+String(n).padStart(2,"0")+(solved?" · respuestas esperadas":""),studentCode:n,scenarioId:n-1,started:true,current:solved?0:-2,unlocked:solved?missions.length-1:0,answers:{},attempts:{},passed:{},responses:{},startedAt:new Date().toISOString(),ops:{continuity:70,budget:70,quality:70,risk:70,events:{},log:[],scenarioApplied:false}};
+ if(solved){
+  missions.forEach((m,i)=>{
+   state.passed[i]=true;state.attempts[i]=1;
+   if(m.kind==="text"){
+    const answer=facultyModelResponses[i]||"";
+    state.responses["written_"+i]=answer;state.responses["answer_"+i]=answer;state.answers[i]=answer;
+    if(m.responseRule&&typeof gradeWrittenAnswer==="function")state.responses["writtenGrade_"+i]=gradeWrittenAnswer(answer,m.responseRule);
+   }else if(m.kind==="number"){
+    state.answers[i]=m.correct;state.responses["answer_"+i]=m.correct;
+   }else if(m.kind==="form"){
+    const sample={item:"Rodamiento modelo 6204-2RS compatible con AM-40 (validado por el área técnica)",qty:"130",unit:"pieza",date:"2026-11-16",reason:"Evitar la interrupción de producción y mantener la continuidad operativa; verificar existencia antes de comprar.",cost:"MTTO-04 / Mantenimiento"};
+    state.responses[i]=sample;state.responses["answer_"+i]=sample;
+   }else if(m.kind==="mc"){
+    state.answers[i]=m.correct;state.responses["answer_"+i]=m.correct;
+   }
+  });
+ }
  document.getElementById("instructorConsole").style.display="none";document.getElementById("instructorGate").style.display="none";document.getElementById("loginGate").style.display="none";
  document.getElementById("welcome").classList.add("hidden");document.getElementById("workspace").classList.remove("hidden");document.getElementById("workspace").classList.add("nexus-workspace-visible");document.querySelector(".shell").classList.add("nexus-entered");document.body.classList.add("faculty-preview-active");
- document.getElementById("studentName").textContent=state.name;document.getElementById("studentStatus").textContent=state.group;document.getElementById("topName").textContent=state.name;document.getElementById("topGroup").textContent=state.group;document.getElementById("topAvatar").textContent="PV";document.getElementById("topbarPageTitle").textContent="Vista de alumno · prueba docente";
+ document.getElementById("studentName").textContent=state.name;document.getElementById("studentStatus").textContent=state.group;document.getElementById("topName").textContent=state.name;document.getElementById("topGroup").textContent=state.group;document.getElementById("topAvatar").textContent="PV";document.getElementById("topbarPageTitle").textContent=solved?"Ejemplo resuelto · alumno 01":"Vista de alumno · prueba docente";
  const old=document.getElementById("facultyPreviewBanner");if(old)old.remove();
- document.body.insertAdjacentHTML("afterbegin",'<div class="faculty-preview-banner" id="facultyPreviewBanner"><span><b>VISTA PREVIA DOCENTE</b> · Así ve el alumno el escenario '+String(n).padStart(2,"0")+'. El progreso real guardado no se modifica.</span><button onclick="exitFacultyPreview()">VOLVER A CONSOLA DOCENTE</button></div>');
- renderNav();updateStatus();updateCommandDashboard();showDash();window.scrollTo({top:0,behavior:"smooth"});
+ const banner=solved?'<span><b>EJEMPLO RESUELTO · ALUMNO 01</b> · Los 35 retos aparecen validados con respuestas modelo para revisar la experiencia y dar retroalimentación. Este modo no guarda ni modifica entregas reales.</span>':'<span><b>VISTA PREVIA DOCENTE</b> · Así ve el alumno el escenario '+String(n).padStart(2,"0")+'. El progreso real guardado no se modifica.</span>';
+ document.body.insertAdjacentHTML("afterbegin",'<div class="faculty-preview-banner" id="facultyPreviewBanner">'+banner+'<button onclick="exitFacultyPreview()">VOLVER A CONSOLA DOCENTE</button></div>');
+ renderNav();updateStatus();updateCommandDashboard();
+ if(solved)openMission(0);else showDash();
+ window.scrollTo({top:0,behavior:"smooth"});
 }
 function exitFacultyPreview(){
  if(!facultyPreviewSnapshot)return;
