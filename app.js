@@ -58,10 +58,10 @@ function missionScore(){let total=0;missions.forEach((m,i)=>{if(state.passed[i])
 
 let state={name:"",group:"",studentCode:0,scenarioId:0,started:false,current:-1,unlocked:0,answers:{},attempts:{},passed:{},responses:{},startedAt:null,ops:{continuity:70,budget:70,quality:70,risk:70,events:{},log:[]}};
 const $=s=>document.querySelector(s);
-function save(){try{localStorage.setItem("nexus_u3_state",JSON.stringify(state))}catch(e){}}
+function save(){if(window.__nexusFacultyPreview)return;try{localStorage.setItem("nexus_u3_state",JSON.stringify(state))}catch(e){}}
 function load(){try{const x=JSON.parse(localStorage.getItem("nexus_u3_state")||"null");if(x&&x.name){state=x;state.passed=state.passed||{};state.attempts=state.attempts||{};state.answers=state.answers||{};state.responses=state.responses||{};const nextUnlocked=Math.max(0,...Object.keys(state.passed).filter(k=>state.passed[k]).map(k=>Number(k)+1));state.unlocked=Math.min(missions.length-1,Math.max(Number(state.unlocked)||0,nextUnlocked));}}catch(e){}}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function startMission(){const n=$("#fullName").value.trim(),g=$("#group").value.trim();if(n.length<5){$("#loginErrorMsg")&&($("#loginErrorMsg").textContent="Escribe tu nombre completo para continuar.");alert("Escribe tu nombre completo para registrar la sesión.");return}state.name=n;state.group=g||"Sin grupo";state.studentCode=Number($("#loginStudentCode")?$("#loginStudentCode").value:state.studentCode||0);state.scenarioId=([4,1,6,2,7,0,5,3][Math.max(0,Math.min(7,(state.studentCode||1)-1))]);state.started=true;state.startedAt=state.startedAt||new Date().toISOString();save();$("#welcome").classList.add("hidden");$("#workspace").classList.remove("hidden");$("#workspace").classList.add("nexus-workspace-visible");$("#loginGate").style.display="none";$(".shell").classList.add("nexus-entered");$("#studentName").textContent=state.name;$("#studentStatus").textContent="Sesión activa · "+state.group;$("#topName").textContent=state.name;$("#topGroup").textContent=state.group;$("#activeRoleBadge")&&($("#activeRoleBadge").textContent="ESCENARIO · "+String(state.studentCode||1).padStart(2,"0"));$("#topAvatar").textContent=state.name.split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();$("#topbarPageTitle").textContent="Centro de control";renderNav();updateStatus();updateCommandDashboard();showDash();}
+function startMission(){const n=$("#fullName").value.trim(),g=$("#group").value.trim();if(n.length<5){$("#loginErrorMsg")&&($("#loginErrorMsg").textContent="Escribe tu nombre completo para continuar.");alert("Escribe tu nombre completo para registrar la sesión.");return}state.name=n;state.group=g||"Sin grupo";state.studentCode=Number($("#loginStudentCode")?$("#loginStudentCode").value:state.studentCode||0);state.scenarioId=Math.max(0,Math.min(7,(state.studentCode||1)-1));state.started=true;state.startedAt=state.startedAt||new Date().toISOString();save();$("#welcome").classList.add("hidden");$("#workspace").classList.remove("hidden");$("#workspace").classList.add("nexus-workspace-visible");$("#loginGate").style.display="none";$(".shell").classList.add("nexus-entered");$("#studentName").textContent=state.name;$("#studentStatus").textContent="Sesión activa · "+state.group;$("#topName").textContent=state.name;$("#topGroup").textContent=state.group;$("#activeRoleBadge")&&($("#activeRoleBadge").textContent="ESCENARIO · "+String(state.studentCode||1).padStart(2,"0"));$("#topAvatar").textContent=state.name.split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();$("#topbarPageTitle").textContent="Centro de control";renderNav();updateStatus();updateCommandDashboard();showDash();}
 function updateStatus(){$("#studentName").textContent=state.name||"Sin identificar";$("#studentStatus").textContent=state.started?"Sesión activa · "+state.group:"Sesión no iniciada";let done=Object.keys(state.passed).filter(k=>state.passed[k]).length;$("#progressText").textContent=done+"/"+missions.length;$("#progressBar").style.width=(done/missions.length*100)+"%"}
 function renderNav(){let h='<div class="nav-section-title">COLA DE MISIONES · '+missions.length+' RETOS</div><button class="'+(state.current===-1?"active":"")+'" onclick="showBriefing()">▣ Briefing operativo</button>';missions.forEach((m,i)=>{const done=!!state.passed[i],locked=i>state.unlocked&&!done;h+='<button data-mission-index="'+i+'" class="'+(state.current===i?"active ":"")+(done?"done ":"")+(locked?"locked":"")+'" '+(locked?'disabled':'')+' onclick="openMission('+i+')"><span class="pill">'+(done?"OK":String(i+1).padStart(2,"0"))+'</span> '+esc(m.title.replace(/^Reto \d+\. /,""))+'</button>'});h+='<button onclick="showFinal()">▤ Reporte final</button>';$("#nav").innerHTML=h;updateStatus();updateCommandDashboard();}
 function showBriefing(){if(!state.started){return}$("#commandDashboard").classList.add("nexus-view-hidden");$("#workspace").classList.add("nexus-workspace-visible");$("#briefing").classList.remove("hidden");$("#missionMount").innerHTML="";$("#finalReport").classList.add("hidden");state.current=-1;$("#topbarPageTitle").textContent="Briefing operativo";renderNav();syncNexusActive("briefing");window.scrollTo({top:0,behavior:"smooth"})}
@@ -278,3 +278,103 @@ function nextBranchCase(){if(!branchState.revealed)return;if(branchState.index<b
 function renderBranchComparison(){const grid=$("#branchComparisonGrid");grid.innerHTML=branchCases.map((c,i)=>{const a=branchState.answers[i],o=c.options[a.choice];return '<article class="branch-comparison-card"><div class="branch-case-kicker">CASO '+(i+1)+' · '+c.id+'</div><h5>'+esc(c.title)+'</h5><div class="comparison-grade">'+esc(o.grade)+'</div><p><b>Tu decisión:</b> '+esc(o.short)+'</p><p>'+esc(o.outcome)+'</p><button onclick="openFieldManual(\''+o.manual+'\')">REPASAR APARTADO ↗</button></article>'}).join("");const total=branchState.answers.reduce((s,a)=>s+a.score,0);grid.insertAdjacentHTML("beforeend",'<div class="branch-total"><b>Resumen de la práctica: '+total+' / 9</b><p>Usa el resultado para comparar criterios, no para etiquetar al estudiante. Identifica qué evidencia faltó y qué decisión cambiarías en cada caso.</p></div>');$("#branchCaseCard").hidden=true;$("#branchComparison").hidden=false;$("#branchProgressLabel").textContent="DEBRIEF COMPLETADO";$("#branchProgressFill").style.width="100%";$("#branchScoreLabel").textContent=total+" / 9 puntos de práctica";$("#branchComparison").scrollIntoView({behavior:"smooth",block:"start"});}
 function resetBranchLab(){branchState={index:0,answers:[],revealed:false,attempts:0};$("#branchCaseCard").hidden=false;$("#branchComparison").hidden=true;renderBranchCase();}
 selectSupplyNode("production");renderBranchCase();
+/* Faculty review tools: answer key, student preview and portable submissions. */
+let facultyPreviewSnapshot=null;
+function facultyScenarioAnswerKey(v){
+ const bearingFree=v.bearingPhysical-v.bearingReserved,screwFree=v.screwPhysical-v.screwReserved,coverFree=v.coverPhysical-v.coverReserved;
+ const bearingNet=Math.max(0,v.bearingNeed+v.bearingSafety-bearingFree-v.bearingIncoming),bearingNoReceipt=Math.max(0,v.bearingNeed+v.bearingSafety-bearingFree);
+ const screwNet=Math.max(0,v.screwNeed+v.screwSafety-screwFree),coverNet=Math.max(0,v.coverNeed+v.coverSafety-coverFree-v.coverIncoming),coverNoReceipt=Math.max(0,v.coverNeed+v.coverSafety-coverFree);
+ return '<details class="scenario-key-details"><summary>VER RESPUESTAS ESPERADAS Y CÁLCULOS</summary><div class="scenario-key-body">'+
+ '<p><b>1. Rodamientos</b> · Libres hoy: '+v.bearingPhysical+' − '+v.bearingReserved+' = <strong>'+bearingFree+'</strong>. Neto con entrada confirmada y oportuna: '+v.bearingNeed+' + '+v.bearingSafety+' − '+bearingFree+' − '+v.bearingIncoming+' = <strong>'+bearingNet+'</strong>.</p>'+
+ '<p class="faculty-key-caveat">Si la entrada no está confirmada o llega después de la necesidad, no la descuentes: el neto conservador sería <strong>'+bearingNoReceipt+'</strong>.</p>'+
+ '<p><b>2. Tornillos</b> · Libres: '+v.screwPhysical+' − '+v.screwReserved+' = '+screwFree+'. Neto incluyendo seguridad: '+v.screwNeed+' + '+v.screwSafety+' − '+screwFree+' = <strong>'+screwNet+'</strong>.</p>'+
+ '<p><b>3. Tapas</b> · Libres hoy: '+v.coverPhysical+' − '+v.coverReserved+' = '+coverFree+'. Neto con entrada confirmada y oportuna: '+v.coverNeed+' + '+v.coverSafety+' − '+coverFree+' − '+v.coverIncoming+' = <strong>'+coverNet+'</strong>. Sin poder contar la entrada, el neto conservador sería <strong>'+coverNoReceipt+'</strong>.</p>'+
+ '<p><b>Criterio de decisión:</b> comparar la fecha requerida con los plazos de '+v.normalDays+' días del proveedor habitual y '+v.altDays+' días de la alternativa; contrastar el sobrecosto de '+v.altPremium+'% con el riesgo de retraso, validar especificación/cantidad y obtener autorización antes de emitir la compra. No cuentes recepciones futuras no confirmadas o que llegan tarde.</p>'+
+ '</div></details>';
+}
+function facultyChallengeKey(m,i){
+ let answer="";
+ if(m.kind==="mc")answer='<p class="faculty-key-answer"><b>Respuesta:</b> '+String.fromCharCode(65+Number(m.correct))+'. '+esc(m.opts[Number(m.correct)]||"")+'</p>';
+ else if(m.kind==="number")answer='<p class="faculty-key-answer"><b>Resultado numérico esperado:</b> '+esc(m.correct)+'</p>';
+ else if(m.kind==="form")answer='<p class="faculty-key-answer"><b>Campos que debe completar:</b> '+(m.fields||[]).map(f=>esc(f.label)).join("; ")+'.</p>';
+ else if(m.kind==="text"){const groups=(m.responseRule&&m.responseRule.groups)||[];answer='<p class="faculty-key-answer"><b>Elementos esperados:</b></p><ul class="faculty-rubric-list">'+groups.map(g=>'<li>'+esc(g.label)+'</li>').join("")+'</ul>';}
+ const why=m.why?'<p><b>Respuesta de referencia / criterio:</b> '+esc(m.why)+'</p>':"";
+ const hint=m.hint?'<p class="faculty-key-hint"><b>Pista para retroalimentar:</b> '+esc(m.hint)+'</p>':"";
+ return '<details class="faculty-answer-row" data-faculty-search="'+esc((String(i+1)+" "+m.topic+" "+m.title+" "+(m.q||"")+" "+(m.why||"")+" "+(m.hint||"")).toLowerCase())+'"><summary><span class="faculty-answer-num">'+String(i+1).padStart(2,"0")+'</span><span><b>'+esc(m.title)+'</b><small>'+esc(m.topic)+' · '+(m.kind==="text"?"Respuesta escrita":m.kind==="number"?"Cálculo numérico":m.kind==="form"?"Formato práctico":"Opción múltiple")+'</small></span><span class="faculty-key-plus">＋</span></summary><div class="faculty-answer-body"><p><b>Consigna:</b> '+esc(m.q||"Completar el formato solicitado.")+'</p>'+answer+why+hint+'</div></details>';
+}
+function filterFacultyAnswerKey(query){
+ const q=String(query||"").trim().toLowerCase();let count=0;
+ document.querySelectorAll(".faculty-answer-row").forEach(row=>{const visible=!q||row.textContent.toLowerCase().includes(q);row.hidden=!visible;if(visible)count++;});
+ const el=document.getElementById("facultyAnswerKeys");if(el)el.dataset.visibleCount=String(count);
+}
+function renderFacultyAnswerLibrary(){const mount=document.getElementById("facultyAnswerKeys");if(mount)mount.innerHTML=missions.map((m,i)=>facultyChallengeKey(m,i)).join("");}
+function renderInstructorConsole(){
+ document.getElementById("instructorGate").style.display="none";
+ document.getElementById("instructorConsole").style.display="block";
+ document.getElementById("scenarioCards").innerHTML=scenarioVariants.map((v,i)=>{
+  const code=i+1;
+  return '<article class="scenario-card"><div class="case-id">CASE FILE · NX-'+String(code).padStart(2,"0")+'</div><h3>Escenario '+String(code).padStart(2,"0")+' · '+esc(v.label)+'</h3><p><span class="scenario-chip">DEMANDA '+v.demand+' BOMBAS</span> <span class="scenario-chip">FECHA '+esc(v.required)+'</span></p><ul><li>Proveedor habitual: '+esc(v.supplier)+' · '+v.normalDays+' días.</li><li>Alternativa: '+esc(v.altSupplier)+' · '+v.altDays+' días · +'+v.altPremium+'%.</li><li>Rodamientos: necesidad '+v.bearingNeed+'; físico '+v.bearingPhysical+', reservado '+v.bearingReserved+', entrada '+v.bearingIncoming+', seguridad '+v.bearingSafety+'.</li><li>Tornillos: necesidad '+v.screwNeed+'; físico '+v.screwPhysical+', reservado '+v.screwReserved+', seguridad '+v.screwSafety+'.</li><li>Tapas: necesidad '+v.coverNeed+'; físico '+v.coverPhysical+', reservado '+v.coverReserved+', entrada '+v.coverIncoming+', seguridad '+v.coverSafety+'.</li></ul><div class="scenario-card-actions"><button class="btn primary" onclick="startFacultyPreview('+code+')">VER COMO ALUMNO ↗</button></div>'+facultyScenarioAnswerKey(v)+'</article>';
+ }).join("");
+ renderFacultyAnswerLibrary();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function startFacultyPreview(code){
+ if(facultyPreviewSnapshot)exitFacultyPreview();
+ facultyPreviewSnapshot={state:JSON.parse(JSON.stringify(state)),storage:localStorage.getItem("nexus_u3_state"),instructorStyle:document.getElementById("instructorConsole").style.display};
+ const n=Math.max(1,Math.min(8,Number(code)||1));
+ window.__nexusFacultyPreview=true;
+ state={name:"PREVISUALIZACIÓN DOCENTE",group:"Prueba docente · Escenario "+String(n).padStart(2,"0"),studentCode:n,scenarioId:n-1,started:true,current:-2,unlocked:0,answers:{},attempts:{},passed:{},responses:{},startedAt:new Date().toISOString(),ops:{continuity:70,budget:70,quality:70,risk:70,events:{},log:[],scenarioApplied:false}};
+ document.getElementById("instructorConsole").style.display="none";document.getElementById("instructorGate").style.display="none";document.getElementById("loginGate").style.display="none";
+ document.getElementById("welcome").classList.add("hidden");document.getElementById("workspace").classList.remove("hidden");document.getElementById("workspace").classList.add("nexus-workspace-visible");document.querySelector(".shell").classList.add("nexus-entered");document.body.classList.add("faculty-preview-active");
+ document.getElementById("studentName").textContent=state.name;document.getElementById("studentStatus").textContent=state.group;document.getElementById("topName").textContent=state.name;document.getElementById("topGroup").textContent=state.group;document.getElementById("topAvatar").textContent="PV";document.getElementById("topbarPageTitle").textContent="Vista de alumno · prueba docente";
+ const old=document.getElementById("facultyPreviewBanner");if(old)old.remove();
+ document.body.insertAdjacentHTML("afterbegin",'<div class="faculty-preview-banner" id="facultyPreviewBanner"><span><b>VISTA PREVIA DOCENTE</b> · Así ve el alumno el escenario '+String(n).padStart(2,"0")+'. El progreso real guardado no se modifica.</span><button onclick="exitFacultyPreview()">VOLVER A CONSOLA DOCENTE</button></div>');
+ renderNav();updateStatus();updateCommandDashboard();showDash();window.scrollTo({top:0,behavior:"smooth"});
+}
+function exitFacultyPreview(){
+ if(!facultyPreviewSnapshot)return;
+ const snap=facultyPreviewSnapshot;facultyPreviewSnapshot=null;window.__nexusFacultyPreview=false;
+ const banner=document.getElementById("facultyPreviewBanner");if(banner)banner.remove();document.body.classList.remove("faculty-preview-active");
+ state=snap.state;
+ try{if(snap.storage===null)localStorage.removeItem("nexus_u3_state");else localStorage.setItem("nexus_u3_state",snap.storage)}catch(e){}
+ document.getElementById("workspace").classList.add("hidden");document.getElementById("workspace").classList.remove("nexus-workspace-visible");document.querySelector(".shell").classList.remove("nexus-entered");
+ document.getElementById("loginGate").style.display="none";document.getElementById("instructorGate").style.display="none";document.getElementById("instructorConsole").style.display=snap.instructorStyle||"block";
+ renderInstructorConsole();window.scrollTo({top:0,behavior:"smooth"});
+}
+function downloadSubmission(){
+ if(!state.started){alert("Primero inicia una sesión de alumno para exportar su entrega.");return;}
+ const rows=missions.map((m,i)=>{
+  let response=state.responses["written_"+i];
+  if(response===undefined)response=state.responses["answer_"+i];
+  if(response===undefined)response=state.responses[i];
+  if(response===undefined)response=state.answers[i];
+  return{index:i,title:m.title,topic:m.topic,question:m.q||"Completar formato",type:m.kind,response:response===undefined?null:response,passed:!!state.passed[i],attempts:state.attempts[i]||0,feedbackState:state.responses["writtenGrade_"+i]||null};
+ });
+ const payload={format:"NEXUS_PROCUREMENT_SUBMISSION",version:1,exportedAt:new Date().toISOString(),student:{name:state.name,group:state.group,studentCode:state.studentCode,scenarioId:state.scenarioId},summary:{completed:Object.keys(state.passed||{}).filter(k=>state.passed[k]).length,total:missions.length,score:missionScore(),startedAt:state.startedAt},answers:rows,reflections:{reflection1:state.reflection1||"",reflection2:state.reflection2||"",reflection3:state.reflection3||""},incidentSimulation:state.ops||null};
+ const safeName=String(state.name||"alumno").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-zA-Z0-9_-]+/g,"_").slice(0,45)||"alumno";
+ downloadFile("NEXUS_entrega_"+safeName+".json",JSON.stringify(payload,null,2),"application/json;charset=utf-8");
+}
+function loadFacultySubmission(event){
+ const input=event.target,file=input&&input.files&&input.files[0];if(!file)return;
+ const reader=new FileReader();
+ reader.onload=function(){try{const payload=JSON.parse(String(reader.result||""));if(payload.format!=="NEXUS_PROCUREMENT_SUBMISSION"||!Array.isArray(payload.answers))throw new Error("El archivo no parece ser una entrega NEXUS válida.");renderFacultySubmission(payload);}catch(err){alert("No se pudo leer la entrega: "+err.message);}input.value="";};
+ reader.onerror=function(){alert("No se pudo leer el archivo seleccionado.");input.value="";};
+ reader.readAsText(file);
+}
+function renderFacultySubmission(payload){
+ const mount=document.getElementById("facultySubmissionReview");if(!mount)return;
+ const student=payload.student||{},summary=payload.summary||{};mount.hidden=false;
+ mount.innerHTML='<div class="submission-review-head"><div><div class="eyebrow">ENTREGA IMPORTADA · '+esc(student.studentCode==null?"SIN CÓDIGO":String(student.studentCode).padStart(2,"0"))+'</div><h4>'+esc(student.name||"Alumno sin identificar")+'</h4><p>'+esc(student.group||"Sin grupo")+' · Exportada: '+esc(payload.exportedAt||"fecha no indicada")+'</p></div><div class="submission-review-score"><b>'+esc(summary.completed==null?"—":summary.completed)+' / '+esc(summary.total==null?missions.length:summary.total)+'</b><small>RETOS VALIDADOS</small><b>'+esc(summary.score==null?"—":summary.score)+'/100</b></div></div><div class="submission-review-actions"><button class="btn" onclick="downloadImportedSubmissionFeedback()">DESCARGAR RESUMEN DE REVISIÓN ↗</button></div><div class="submission-review-list">'+payload.answers.map(entry=>{
+  const idx=Number(entry.index),m=missions[idx],response=entry.response,responseText=response===null||response===undefined?"(No respondió)":typeof response==="string"?response:JSON.stringify(response,null,2);
+  const status=entry.passed?"VALIDADO":"PENDIENTE";
+  return '<details class="submission-answer-row"><summary><span class="faculty-answer-num">'+String(idx+1).padStart(2,"0")+'</span><span><b>'+esc(entry.title||(m&&m.title)||"Reto")+'</b><small>'+esc(entry.topic||(m&&m.topic)||"")+' · '+status+' · '+esc(entry.attempts||0)+' intento(s)</small></span><span class="faculty-key-plus">＋</span></summary><div class="submission-answer-body"><div class="submission-answer-text"><b>Respuesta del alumno</b><pre>'+esc(responseText)+'</pre></div><div class="submission-answer-feedback"><b>Criterios de respuesta esperada</b><p>'+esc(m&&m.why||"Consulta la clave del reto en la biblioteca docente.")+'</p><p><b>Retroalimentación docente</b></p><textarea class="faculty-feedback-note" data-feedback-index="'+idx+'" rows="3" placeholder="Escribe aquí la retroalimentación que entregarás al alumno…"></textarea></div></div></details>';
+ }).join("")+'</div>';
+ window.__nexusImportedSubmission=payload;
+}
+function downloadImportedSubmissionFeedback(){
+ const payload=window.__nexusImportedSubmission;if(!payload){alert("Primero importa una entrega de alumno.");return;}
+ const notes=Array.from(document.querySelectorAll(".faculty-feedback-note")).map(el=>({index:Number(el.dataset.feedbackIndex),feedback:el.value.trim()}));
+ const exportData={format:"NEXUS_FACULTY_FEEDBACK",version:1,student:payload.student||{},reviewedAt:new Date().toISOString(),summary:payload.summary||{},notes:notes,originalSubmission:payload};
+ const name=String((payload.student||{}).name||"alumno").replace(/[^a-zA-Z0-9_-]+/g,"_");
+ downloadFile("NEXUS_retroalimentacion_"+name+".json",JSON.stringify(exportData,null,2),"application/json;charset=utf-8");
+}
