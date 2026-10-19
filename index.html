@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07111e"><meta name="description" content="Simulación inmersiva de compras y abastecimiento: datos digitales, coordinación organizacional, requisiciones y programación de requerimientos."><meta name="color-scheme" content="dark">
+<title>NEXUS | Operación Abastecimiento</title>
+<link rel="stylesheet" href="./styles.css?v=nexus-recruitment-1">
+</head>
+<body>
+<div id="loginGate" class="nexus-login-gate" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+ <section class="login-showcase">
+  <div class="login-wordmark"><span class="login-mark">N</span><span><b>NEXUS</b><small>WORLDWIDE · PROCUREMENT</small></span></div>
+  <div class="login-orbit orbit-one"></div><div class="login-orbit orbit-two"></div>
+  <div class="login-copy"><div class="login-eyebrow"><span class="live-dot"></span> SUPPLY CHAIN INTELLIGENCE · TRAINING ENVIRONMENT</div><h1>La operación<br>no se detiene.<br><em>Tu decisión cuenta.</em></h1><p>Entra al centro de control de AquaMotion Industrial. Analiza datos, coordina áreas, construye requisiciones y programa materiales antes de que la producción se vea comprometida.</p>
+   <div class="login-capabilities"><span>DATA INTELLIGENCE</span><span>PROCUREMENT</span><span>SUPPLY PLANNING</span><span>RISK CONTROL</span></div>
+  <div class="login-campaign-preview">
+   <div class="login-campaign-heading"><b>CAMPAÑA DE PROGRESIÓN</b><span>30 RETOS · 5 NIVELES</span></div>
+   <div class="login-campaign-steps">
+    <div class="login-campaign-step"><span class="login-campaign-icon">⌁</span><b>Inteligencia</b><small>01–06</small></div>
+    <div class="login-campaign-step"><span class="login-campaign-icon">⌘</span><b>Coordinación</b><small>07–12</small></div>
+    <div class="login-campaign-step"><span class="login-campaign-icon">▤</span><b>Requisición</b><small>13–18</small></div>
+    <div class="login-campaign-step"><span class="login-campaign-icon">◷</span><b>Programa</b><small>19–24</small></div>
+    <div class="login-campaign-step"><span class="login-campaign-icon">⬡</span><b>Control Tower</b><small>25–30</small></div>
+   </div>
+   <div class="login-campaign-bottom"><span>Desbloquea etapas y mejora tu rango operativo.</span><strong>LEVEL UP ↗</strong></div>
+  </div>
+  </div>
+  <div class="login-footer"><span>NEXUS PROCUREMENT / UNIDAD 3</span><span>SIMULACIÓN ACADÉMICA · V 1.0</span></div>
+ </section>
+ <section class="login-access">
+  <div class="access-top"><span class="access-overline">SECURE OPERATOR ACCESS</span><span class="access-pill"><i></i> SISTEMA DISPONIBLE</span></div>
+  <div class="access-title"><div class="access-symbol">↗</div><div><h2 id="loginTitle">Identificación del operador</h2><p>Registra tu identidad para abrir tu expediente de misión.</p></div></div>
+  <div class="login-resume-card"><div><span>EXPEDIENTE LOCAL</span><strong id="loginSavedName">NUEVO OPERADOR</strong></div><div class="resume-stat"><strong id="loginSavedProgress">00<span>/30</span></strong><small>RETOS VALIDADOS</small></div></div>
+  <form id="nexusLoginForm" class="nexus-login-form">
+   <label for="loginFullName">Nombre completo</label><input id="loginFullName" type="text" autocomplete="name" minlength="5" maxlength="100" placeholder="Nombre y apellidos" required>
+   <label for="loginGroup">Grupo / sección</label><input id="loginGroup" type="text" maxlength="80" placeholder="Ej. 4A · Compras y Abastecimiento">
+   <label for="loginStudentCode">Código de alumno (asignado por el docente)</label><select id="loginStudentCode" class="student-code-select" required><option value="">Selecciona tu código</option><option value="1">Alumno 01</option><option value="2">Alumno 02</option><option value="3">Alumno 03</option><option value="4">Alumno 04</option><option value="5">Alumno 05</option><option value="6">Alumno 06</option><option value="7">Alumno 07</option><option value="8">Alumno 08</option></select>
+   <div class="login-note"><span>i</span><p>Tu progreso se guarda en este navegador. Si vuelves desde el mismo dispositivo y navegador, podrás retomar tu misión.</p></div>
+   <button class="login-submit" type="submit"><span id="loginButtonLabel">ENTRAR AL CENTRO DE CONTROL</span><b>↗</b></button>
+  </form>
+  <button class="instructor-link" type="button" onclick="openInstructor()">Acceso docente</button>
+  <div class="login-bottom-stats"><div><strong>30</strong><span>DESAFÍOS</span></div><div><strong>04</strong><span>EJES ACADÉMICOS</span></div><div><strong>03</strong><span>ACTIVIDADES CLAVE</span></div></div>
+  <div class="login-security">NEXUS WORLDWIDE <span>·</span> ENTORNO EDUCATIVO CONTROLADO</div>
+ </section>
+</div>
+<section id="instructorGate" class="nexus-login-gate" style="display:none" role="dialog" aria-modal="true"><section class="login-showcase"><div class="login-wordmark"><span class="login-mark">N</span><span><b>NEXUS</b><small>WORLDWIDE · PROCUREMENT</small></span></div><div class="login-copy"><div class="login-eyebrow">INSTRUCTOR ACCESS</div><h1>Control de<br>escenarios.<br><em>Vista docente.</em></h1><p>Consulta ocho escenarios equivalentes con la misma lógica de resolución.</p></div></section><section class="login-access"><div class="access-title"><div><h2>Acceso docente</h2><p>Ingresa tus credenciales.</p></div></div><form id="instructorLoginForm" class="nexus-login-form"><label for="instructorUser">Usuario</label><input id="instructorUser" autocomplete="username" required><label for="instructorPass">Contraseña</label><input id="instructorPass" type="password" autocomplete="current-password" required><div id="instructorError" class="incident-feedback" style="display:none"></div><button class="login-submit" type="submit"><span>ABRIR CONSOLA DOCENTE</span><b>↗</b></button></form><button class="btn" style="margin-top:14px;width:100%" onclick="closeInstructor()">VOLVER AL ACCESO DE ALUMNOS</button><div class="login-security">AVISO: acceso de interfaz; no es autenticación segura de servidor.</div></section></section><section id="instructorConsole" class="instructor-console" style="display:none"><div class="command-head"><div><div class="eyebrow">NEXUS PROCUREMENT / FACULTY CONSOLE</div><h2>Panel docente · 8 escenarios</h2><p class="muted">Mismas competencias, criterios y lógica de resolución; cambian datos, fechas y proveedores.</p></div><button class="btn" onclick="closeInstructor()">Cerrar consola</button></div><div class="instructor-notice"><b>Importante:</b> los casos se pueden consultar aquí, pero las entregas y puntuaciones no se sincronizan desde otros dispositivos. Para centralizar resultados se requiere base de datos/backend.</div><div id="scenarioCards" class="scenario-cards"></div><div class="instructor-key"><h3>Criterio común de resolución</h3><ol><li>Validar inventario utilizable, reservas, bloqueos y recepciones confirmadas.</li><li>Comparar fecha requerida, plazo, costo total, presupuesto y riesgo de paro.</li><li>Completar especificación, cantidad, unidad, fecha, justificación y autorizaciones de la requisición.</li><li>Documentar alternativas, responsables, evidencia y decisión.</li></ol></div></section>
+<div class="shell">
+<header class="top"><div class="brand"><div class="logo">N</div><div><div class="eyebrow">NEXUS WORLDWIDE · PROCUREMENT</div><h1>NEXUS PROCUREMENT · CONTROL TOWER</h1><div class="sub">Simulación académica de compras, datos y programación</div></div></div><div class="badge">MISIÓN U3 · 180–240 MIN</div></header>
+<div class="layout">
+<aside class="side">\n <div class="nexus-sidebar-brand"><span class="nexus-sidebar-mark">N</span><span><b>NEXUS</b><small>WORLDWIDE · PROCUREMENT</small></span></div>
+
+ <div class="student"><div class="eyebrow">Operador asignado</div><strong id="studentName">Sin identificar</strong><div class="sub" id="studentStatus">Sesión no iniciada</div></div>
+ <div class="progress-label"><span>Progreso de misión</span><b id="progressText">0/30</b></div><div class="bar"><span id="progressBar"></span></div>
+ <div class="nexus-primary-nav" aria-label="Navegación del centro de control">
+  <button data-nexus-view="dashboard" class="active" onclick="showDash()"><span>⌂</span> Centro de control</button>
+  <button data-nexus-view="briefing" onclick="showBriefing()"><span>▤</span> Briefing operativo</button>
+  <button data-nexus-view="missions" onclick="resumeMission()"><span>⚑</span> Continuar misión</button>
+  <button data-nexus-view="report" onclick="showFinal()"><span>▧</span> Reporte de desempeño</button>
+ </div>
+ <div class="queue-label">MISSION QUEUE <span>30</span></div>
+ <div class="nav" id="nav"></div>
+ <div class="callout warning mini">Regla NEXUS: primero pulsa <b>Validar respuesta</b>. Solo después de acertar se habilita <b>Avanzar al siguiente</b>. Tras dos errores aparece una pista.</div>
+ <button class="btn" style="width:100%" onclick="resetProgress()">Reiniciar sesión</button>
+</aside>
+<main class="main"><header class="nexus-topbar" id="nexusTopbar">
+ <button class="mobile-menu" onclick="toggleNexusSidebar()" aria-label="Abrir navegación">☰</button>
+ <div class="topbar-location"><span class="topbar-breadcrumb">NEXUS WORLDWIDE <b>/</b> PROCUREMENT</span><strong id="topbarPageTitle">Centro de control</strong></div>
+ <div class="topbar-search"><span>⌕</span><input id="nexusSearch" type="search" placeholder="Buscar reto o tema…" oninput="filterMissionNav(this.value)"></div>
+ <div class="topbar-right"><span class="system-status"><i></i> SISTEMA EN LÍNEA</span><div class="topbar-operator"><span class="operator-avatar" id="topAvatar">OP</span><div><strong id="topName">Operador</strong><small id="topGroup">Compras y abastecimiento</small></div></div></div>
+</header><section class="panel command-dashboard nexus-home" id="commandDashboard">
+ <div class="command-head"><div><div class="eyebrow">NEXUS PROCUREMENT / OPERATIONAL OVERVIEW</div><h2>Centro de control de abastecimiento</h2><p class="muted">AquaMotion Industrial · Planta de producción · Unidad 3</p></div><div class="live-state"><span class="live-dot"></span> OPERACIÓN SIMULADA</div></div>
+ <div class="command-kpis">
+  <article class="command-kpi"><span class="kpi-label">DESAFÍOS VALIDADOS</span><strong id="dashDone">00<span class="kpi-denom">/30</span></strong><span id="dashProgressCaption">Tu operación está por comenzar</span><div class="kpi-track"><i id="dashProgressBar" style="width:0%"></i></div></article>
+  <article class="command-kpi"><span class="kpi-label">PUNTUACIÓN ACTUAL</span><strong id="dashScore">100</strong><span>Índice académico con penalización por intentos</span><div class="kpi-track"><i id="dashScoreBar" style="width:100%"></i></div></article>
+  <article class="command-kpi"><span class="kpi-label">EJES DE OPERACIÓN</span><strong>04</strong><span>Datos · Organización · Requisición · Programa</span><div class="kpi-track"><i style="width:100%"></i></div></article>
+  <article class="command-kpi risk-kpi"><span class="kpi-label">ESTADO DE LA PLANTA</span><strong id="dashPlantStatus">EN ALERTA</strong><span>Materiales y fecha de producción bajo análisis</span><div class="risk-pulse"><i></i><i></i><i></i><i></i><i></i></div></article>
+ </div>
+
+ <section class="nexus-progression" id="nexusProgression">
+  <div class="nexus-hero-visual" aria-hidden="true"><div class="nexus-cube"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+  <div class="progression-top"><div><div class="eyebrow">CAMPAÑA OPERATIVA · SISTEMA DE NIVELES</div><h3 class="progression-title">Tu ruta hacia Procurement Specialist</h3><p class="progression-sub">No solo contestes: desbloquea sectores, resuelve incidencias y demuestra que puedes mantener la cadena de suministro en movimiento.</p></div><div class="rank-emblem" aria-label="Insignia de cadete"><span>01</span></div><div class="rank-chip" id="progressionRank">RANGO 01 · CADETE</div></div>
+  <div class="progression-body"><div class="stage-track" id="progressionStages" aria-label="Etapas de la campaña"></div><div class="progression-side"><div class="progression-percent" id="progressionPercent">00%</div><p id="progressionSummary">Tu operación comienza en el centro de control.</p><div class="progression-bar"><span id="progressionFill" style="width:0%"></span></div></div></div>
+  <div class="progression-next"><div class="progression-next-copy"><b id="progressionNextTitle">Siguiente objetivo: iniciar el briefing</b><span id="progressionNextDesc">Lee el expediente y valida los datos antes de tomar decisiones.</span></div><button class="progression-action" id="progressionNextBtn" onclick="resumeMission()">INICIAR OPERACIÓN ↗</button></div>
+ </section>
+ <div class="nexus-home-grid">
+  <article class="home-feature home-feature-main"><div class="home-feature-image"><div class="image-grid"></div><span class="image-tag">CASE FILE · AM-100</span><div class="image-orbit"></div><div class="factory-glyph">AM</div></div><div class="home-feature-copy"><div class="eyebrow">MISIÓN PRINCIPAL · AQUAMOTION INDUSTRIAL</div><h3>Evita la interrupción de producción</h3><p>Debes coordinar el suministro de materiales para fabricar 100 bombas. Los datos de inventario, las reservas y los plazos del proveedor pueden cambiar el resultado de la operación.</p><div class="home-feature-facts"><span><b>100</b> bombas planeadas</span><span><b>23 NOV</b> fecha requerida</span><span><b>30</b> desafíos</span></div><button class="btn primary" onclick="showBriefing()">ABRIR BRIEFING OPERATIVO <b>↗</b></button></div></article>
+  <article class="home-side-card"><div class="panel-header"><div><h3>Estado de misión</h3><small>Actualización de tu expediente</small></div><span class="status status-live">EN CURSO</span></div><div class="mission-state-row"><span class="state-icon">◈</span><div><b id="dashCurrentMission">Briefing operativo</b><small id="dashCurrentCaption">Lee el caso y revisa los datos iniciales.</small></div></div><div class="mission-progress"><div class="mini-bar"><span id="dashMiniProgress" style="width:0%"></span></div><strong id="dashMiniCount">0 / 30</strong></div><button class="btn home-secondary" onclick="resumeMission()">CONTINUAR MI MISIÓN <b>→</b></button><div class="home-divider"></div><div class="home-alert"><span>!</span><div><b>ALERTA DE SUMINISTRO</b><p>Una decisión incorrecta puede provocar faltantes, compras urgentes o exceso de inventario.</p></div></div></article>
+  <article class="home-module"><div class="home-module-top"><span class="module-icon">01</span><span class="module-state">MÓDULO 3.2</span></div><h4>Data intelligence</h4><p>Calidad de datos, sistemas digitales, inventarios e indicadores.</p><button onclick="openTopicMission('3.2')">EXPLORAR RETOS <b>↗</b></button></article>
+  <article class="home-module"><div class="home-module-top"><span class="module-icon">02</span><span class="module-state">MÓDULO 3.3</span></div><h4>Organizational flow</h4><p>Responsabilidades, coordinación entre áreas y toma de decisiones.</p><button onclick="openTopicMission('3.3')">EXPLORAR RETOS <b>↗</b></button></article>
+  <article class="home-module"><div class="home-module-top"><span class="module-icon">03</span><span class="module-state">MÓDULO 3.4</span></div><h4>Requisition control</h4><p>Especificaciones, trazabilidad, evidencia y requisiciones completas.</p><button onclick="openTopicMission('3.4')">EXPLORAR RETOS <b>↗</b></button></article>
+  <article class="home-module"><div class="home-module-top"><span class="module-icon">04</span><span class="module-state">MÓDULO 3.5</span></div><h4>Supply scheduling</h4><p>Requerimientos netos, fechas, lotes y riesgo de abastecimiento.</p><button onclick="openTopicMission('3.5')">EXPLORAR RETOS <b>↗</b></button></article>
+ </div>
+
+ <section class="nexus-live-ops" id="liveOperations">
+  <div class="live-ops-head"><div><div class="eyebrow">LIVE INCIDENT RESPONSE · NEXUS SIMULATION</div><h3>Centro de incidentes en vivo</h3><p>Este módulo es un simulador de decisiones: analiza un incidente de abastecimiento, elige una respuesta y observa cómo cambia el equilibrio entre continuidad de producción, presupuesto, calidad y riesgo. Las barras son indicadores didácticos de la simulación, no datos de una planta real.</p><div class="role-badge" id="activeRoleBadge">ROL · JEFATURA DE COMPRAS</div></div><span class="ops-chip"><i class="live-dot"></i> EVENTO ACTIVO</span></div>
+  <div class="incident-guide"><b>¿Cómo se usa este centro?</b><span>01 · Lee el caso</span><span>02 · Compara las consecuencias</span><span>03 · Elige una acción</span><span>04 · Revisa la retroalimentación y la bitácora</span></div>
+  <div class="ops-live-grid"><article class="incident-card"><div class="incident-code" id="incidentCode">INCIDENTE 01 · SUMINISTRO</div><h4 id="incidentTitle">Alerta de abastecimiento</h4><p id="incidentDescription">Elige una respuesta operativa para ver sus consecuencias.</p><div class="incident-actions" id="incidentActions"></div><div class="incident-feedback" id="incidentFeedback" aria-live="polite"></div></article>
+   <article class="ops-metrics-card"><h4>Índice de salud operativa del equipo</h4>
+    <div class="ops-metric"><span>Continuidad de producción</span><strong id="metricContinuityText">70 / 100</strong><div class="ops-meter"><i id="metricContinuity" style="width:70%"></i></div></div>
+    <div class="ops-metric"><span>Control presupuestal</span><strong id="metricBudgetText">70 / 100</strong><div class="ops-meter"><i id="metricBudget" style="width:70%"></i></div></div>
+    <div class="ops-metric"><span>Calidad de decisión</span><strong id="metricQualityText">70 / 100</strong><div class="ops-meter"><i id="metricQuality" style="width:70%"></i></div></div>
+    <div class="ops-metric"><span>Gestión del riesgo</span><strong id="metricRiskText">70 / 100</strong><div class="ops-meter"><i id="metricRisk" style="width:70%"></i></div></div>
+    <div class="ops-log"><div class="ops-log-title">BITÁCORA DE OPERACIÓN</div><div id="opsLog"><div class="ops-log-line"><b>[SYSTEM]</b> Simulación preparada. Esperando primera decisión.</div></div></div>
+   </article>
+  </div>
+ </section>
+ <div class="home-bottom-grid"><article class="home-terminal"><div class="terminal-heading"><span><i></i> OPERATION LOG</span><span>SIMULACIÓN LOCAL</span></div><div class="terminal-lines"><p><b>[SYSTEM]</b> Entorno de entrenamiento inicializado.</p><p><b>[CASE]</b> AquaMotion Industrial · lote AM-100 cargado.</p><p><b>[CHECK]</b> Inventario, reservas y recepciones requieren validación.</p><p><b>[NEXT]</b> Abre el briefing para recibir instrucciones operativas.</p></div></article><article class="home-rank-card"><div class="eyebrow">PERFORMANCE TRACKER</div><h3>Tu desempeño se construye decisión a decisión.</h3><p>Valida cada respuesta, consulta las pistas cuando estén disponibles y guarda tus evidencias al finalizar.</p><button class="btn primary" onclick="showFinal()">VER REPORTE Y PUNTAJE ↗</button></article></div>
+</section>
+<section class="panel command-dashboard" id="commandDashboard">
+ <div class="command-head"><div><div class="eyebrow">NEXUS WORLDWIDE / PROCUREMENT INTELLIGENCE</div><h2>Centro de operaciones de abastecimiento</h2><p class="muted">Unidad 3 · Planeación, coordinación, requisiciones y programación de compras</p></div><div class="live-state"><span class="live-dot"></span> SIMULACIÓN LISTA</div></div>
+ <div class="command-kpis">
+  <article class="command-kpi"><span class="kpi-label">DESAFÍOS OPERATIVOS</span><strong>30</strong><span>Validación progresiva</span><div class="kpi-track"><i style="width:100%"></i></div></article>
+  <article class="command-kpi"><span class="kpi-label">EJES ACADÉMICOS</span><strong>04</strong><span>Temas oficiales de la unidad</span><div class="kpi-track"><i style="width:100%"></i></div></article>
+  <article class="command-kpi"><span class="kpi-label">ACTIVIDADES CLAVE</span><strong>03</strong><span>Analizar · requisitar · programar</span><div class="kpi-track"><i style="width:100%"></i></div></article>
+  <article class="command-kpi risk-kpi"><span class="kpi-label">RIESGO DEL CASO</span><strong>ALTO</strong><span>Materiales, plazos y presupuesto</span><div class="risk-pulse"><i></i><i></i><i></i><i></i><i></i></div></article>
+ </div>
+ <div class="command-lower">
+  <div class="command-module"><div class="module-title"><span class="module-icon">01</span><div><b>DATA INTELLIGENCE</b><small>3.2 · Proceso electrónico de datos</small></div><span class="module-state">ACTIVO</span></div><p>Audita datos, inventario y señales digitales antes de comprometer recursos.</p></div>
+  <div class="command-module"><div class="module-title"><span class="module-icon">02</span><div><b>ORGANIZATIONAL FLOW</b><small>3.3 · Relación con la organización</small></div><span class="module-state">ACTIVO</span></div><p>Coordina Producción, Almacén, Compras, área técnica y Finanzas.</p></div>
+  <div class="command-module"><div class="module-title"><span class="module-icon">03</span><div><b>REQUISITION CONTROL</b><small>3.4 · Requisición de compras</small></div><span class="module-state">ACTIVO</span></div><p>Transforma necesidades ambiguas en solicitudes verificables y trazables.</p></div>
+  <div class="command-module"><div class="module-title"><span class="module-icon">04</span><div><b>SUPPLY SCHEDULING</b><small>3.5 · Programación de compras</small></div><span class="module-state">ACTIVO</span></div><p>Calcula requerimientos netos, fechas y decisiones de abastecimiento.</p></div>
+ </div>
+ <div class="command-alert"><span class="alert-mark">!</span><div><b>ALERTA DE OPERACIÓN · AQUAMOTION INDUSTRIAL</b><p>La producción de 100 bombas depende de información confiable, disponibilidad real y fechas de entrega confirmadas. Las decisiones incorrectas pueden generar faltantes, sobrecostos o interrupciones.</p></div></div>
+</section>
+<section class="panel hero" id="welcome">
+ <div class="eyebrow">Caso de estudio · AquaMotion Industrial</div><h2>Una planta está a punto de detenerse. Tu equipo debe evitarlo.</h2>
+ <p>La planta AquaMotion fabrica bombas de agua. Producción necesita materiales, Almacén reporta existencias, Compras debe conseguir lo faltante y Finanzas controla el presupuesto. Los datos no coinciden y la fecha límite se acerca. Tu misión es conectar sistemas, personas, requisiciones y programación para resolver el caso sin comprar de más ni provocar un paro.</p>
+ <div class="chips"><span class="chip">3.2 Datos digitales</span><span class="chip">3.3 Organización</span><span class="chip">3.4 Requisición</span><span class="chip">3.5 Programación</span><span class="chip">30 retos con validación</span></div>
+ <div class="grid" style="margin-top:18px"><div class="stat"><b>180–240 min</b><span class="muted">Duración estimada de la experiencia</span></div><div class="stat"><b>30 retos</b><span class="muted">Cada uno requiere validar antes de avanzar</span></div></div>
+ <div class="field"><label for="fullName">Nombre completo del estudiante</label><input id="fullName" autocomplete="name" placeholder="Escribe nombre y apellidos"></div>
+ <div class="field"><label for="group">Grupo / sección</label><input id="group" placeholder="Ej. 4A · Administración de Compras"></div>
+ <div class="btnrow"><button class="btn primary" onclick="startMission()">Iniciar misión</button></div>
+ <p class="notice">La sesión guarda el avance en este navegador. Al terminar podrás generar un reporte imprimible y exportar un CSV. No cierres ni borres los datos del navegador antes de guardar la evidencia.</p>
+</section>
+<div id="workspace" class="hidden">
+<section class="panel" id="briefing"><div class="eyebrow">Briefing operativo</div><h3>Lee el tablero antes de tomar decisiones</h3><div class="callout good"><b>Temario oficial de la misión</b><ul><li><b>3.2.</b> Proceso electrónico de datos en la planeación de compras, programación y control.</li><li><b>3.3.</b> Relación de la función de compras y abastecimiento con la organización.</li><li><b>3.4.</b> Requisición de compras.</li><li><b>3.5.</b> Programación de compras.</li></ul><b>Actividades que debes demostrar:</b><ol><li>Análisis del uso de sistemas digitales en compras.</li><li>Elaboración de una requisición de compra.</li><li>Programación de requerimientos.</li></ol>Los diez retos se organizan alrededor de estos cuatro temas y las tres actividades; el caso de estudio es el medio para practicarlos, no un tema adicional.</div><p>Hoy es lunes 2 de noviembre. Producción debe liberar un lote de <b>100 bombas</b> el lunes 23 de noviembre. Cada bomba requiere 2 rodamientos, 4 tornillos y 1 tapa. El sistema de almacén muestra existencias, pero parte del material está reservado. El proveedor habitual tarda 8 días hábiles y el alterno 5, aunque cobra más. El objetivo no es comprar por intuición: es convertir datos fiables en una decisión trazable.</p>
+<div class="tablewrap"><table><thead><tr><th>Material</th><th>Stock físico</th><th>Reservado</th><th>Recepción confirmada antes de la necesidad</th><th>Stock de seguridad</th></tr></thead><tbody><tr><td>Rodamientos</td><td>70</td><td>20</td><td>30</td><td>10</td></tr><tr><td>Tornillos</td><td>500</td><td>100</td><td>0</td><td>40</td></tr><tr><td>Tapas</td><td>45</td><td>5</td><td>20</td><td>10</td></tr></tbody></table></div>
+<div class="callout"><b>Dato crucial:</b> para este ejercicio, stock utilizable = stock físico − reservado. La recepción confirmada solo cuenta si llegará antes de la fecha de uso y está documentada. Las fórmulas del caso son didácticas; en una empresa real también se revisan bloqueos, unidades, lotes mínimos y autorizaciones.</div>
+<div class="visual"><h4>Ruta de la misión</h4><div class="flow"><div class="node"><b>01 · Detectar</b>Calidad del dato</div><div class="node"><b>02 · Coordinar</b>Responsabilidades</div><div class="node"><b>03 · Documentar</b>Requisición</div><div class="node"><b>04 · Calcular</b>MRP y fechas</div><div class="node"><b>05 · Reportar</b>Evidencias</div></div></div>
+<button class="btn primary" onclick="openMission(0)">Comenzar reto 1</button></section>
+<div id="missionMount"></div>
+<section class="panel hidden" id="finalReport"><div class="eyebrow">Cierre de operación</div><h3>Reporte de misión</h3><div id="reportBody"></div><div class="btnrow no-print"><button class="btn primary" onclick="window.print()">Generar / guardar PDF</button><button class="btn" onclick="downloadCSV()">Exportar resultados CSV</button><button class="btn" onclick="downloadReport()">Descargar reporte TXT</button></div><p class="notice">Guarda el PDF y el CSV. El reporte documenta tus respuestas y el puntaje alcanzado en esta sesión del navegador.</p></section>
+</div>
+</main></div><footer class="foot">NEXUS Worldwide · NEXUS Procurement · Unidad 3 · Simulación académica. Los datos de AquaMotion son ficticios y se usan exclusivamente con fines didácticos.</footer>
+</div>
+<script src="./app.js?v=nexus-recruitment-1" defer></script>
+</body></html>
