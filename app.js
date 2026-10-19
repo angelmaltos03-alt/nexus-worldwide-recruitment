@@ -309,7 +309,7 @@ const facultyModelResponses={
 31:"La demanda bruta es 100 bombas × 4 tornillos = 400. Hay 500 tornillos físicos, pero 100 están reservados, por lo que el stock utilizable es 400. Con stock de seguridad de 40 y sin recepciones confirmadas: requerimiento nuevo = 400 + 40 − 400 = 40 tornillos.",
 32:"Proveedor A: 100 × $120 + $600 de flete = $12600; su plazo es 8 días. Proveedor B: 100 × $128 con flete incluido = $12800; su plazo es 4 días. La diferencia es $200. Recomiendo B si confirma la fecha de entrega, porque llega dentro de los 5 días requeridos; debo documentar el riesgo y obtener autorización.",
 33:"Requisición: rodamiento compatible con la bomba crítica, con código y especificación validados por el área técnica; cantidad y unidad definidas; fecha requerida mañana a las 14:00; justificación: evitar la interrupción de mantenimiento/producción; área solicitante: Mantenimiento; centro de costo y aprobador identificados. Adjuntaría placa/modelo, fotografía y ficha técnica antes de cotizar.",
-34:"Se recibieron 92 rodamientos y 8 están dañados: 92 − 8 = 84 unidades utilizables. Producción necesita 95, así que la brecha es 95 − 84 = 11. Registro la discrepancia, documento la evidencia, segrego el material no conforme, notifico al proveedor y áreas internas, y acuerdo reposición o contingencia con fecha confirmada."
+34:"Se recibieron 92 rodamientos y 8 están dañados: 92 − 8 = 84 unidades utilizables. Producción necesita 95, así que la brecha es 95 − 84 = 11. Registro la discrepancia, documento la evidencia y debo segregar el material no conforme; notifico al proveedor y áreas internas, y acuerdo reposición o contingencia con fecha confirmada."
 };
 
 function facultyScenarioAnswerKey(v){
