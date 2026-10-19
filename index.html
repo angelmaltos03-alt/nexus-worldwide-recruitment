@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#07111e"><meta name="description" content="Simulación inmersiva de compras y abastecimiento: datos digitales, coordinación organizacional, requisiciones y programación de requerimientos."><meta name="color-scheme" content="dark">
 <title>NEXUS | Operación Abastecimiento</title>
-<link rel="stylesheet" href="./styles.css?v=nexus-immersive-lab-3">
+<link rel="stylesheet" href="./styles.css?v=nexus-written-challenges-4">
 </head>
 <body>
 <div id="loginGate" class="nexus-login-gate" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
@@ -14,7 +14,7 @@
   <div class="login-copy"><div class="login-eyebrow"><span class="live-dot"></span> SUPPLY CHAIN INTELLIGENCE · TRAINING ENVIRONMENT</div><h1>La operación<br>no se detiene.<br><em>Tu decisión cuenta.</em></h1><p>Entra al centro de control de AquaMotion Industrial. Analiza datos, coordina áreas, construye requisiciones y programa materiales antes de que la producción se vea comprometida.</p>
    <div class="login-capabilities"><span>DATA INTELLIGENCE</span><span>PROCUREMENT</span><span>SUPPLY PLANNING</span><span>RISK CONTROL</span></div>
   <div class="login-campaign-preview">
-   <div class="login-campaign-heading"><b>CAMPAÑA DE PROGRESIÓN</b><span>30 RETOS · 5 NIVELES</span></div>
+   <div class="login-campaign-heading"><b>CAMPAÑA DE PROGRESIÓN</b><span>35 RETOS · 7 NIVELES</span></div>
    <div class="login-campaign-steps">
     <div class="login-campaign-step"><span class="login-campaign-icon">⌁</span><b>Inteligencia</b><small>01–06</small></div>
     <div class="login-campaign-step"><span class="login-campaign-icon">⌘</span><b>Coordinación</b><small>07–12</small></div>
@@ -30,7 +30,7 @@
  <section class="login-access">
   <div class="access-top"><span class="access-overline">SECURE OPERATOR ACCESS</span><span class="access-pill"><i></i> SISTEMA DISPONIBLE</span></div>
   <div class="access-title"><div class="access-symbol">↗</div><div><h2 id="loginTitle">Identificación del operador</h2><p>Registra tu identidad para abrir tu expediente de misión.</p></div></div>
-  <div class="login-resume-card"><div><span>EXPEDIENTE LOCAL</span><strong id="loginSavedName">NUEVO OPERADOR</strong></div><div class="resume-stat"><strong id="loginSavedProgress">00<span>/30</span></strong><small>RETOS VALIDADOS</small></div></div>
+  <div class="login-resume-card"><div><span>EXPEDIENTE LOCAL</span><strong id="loginSavedName">NUEVO OPERADOR</strong></div><div class="resume-stat"><strong id="loginSavedProgress">00<span>/35</span></strong><small>RETOS VALIDADOS</small></div></div>
   <form id="nexusLoginForm" class="nexus-login-form">
    <label for="loginFullName">Nombre completo</label><input id="loginFullName" type="text" autocomplete="name" minlength="5" maxlength="100" placeholder="Nombre y apellidos" required>
    <label for="loginGroup">Grupo / sección</label><input id="loginGroup" type="text" maxlength="80" placeholder="Ej. 4A · Compras y Abastecimiento">
@@ -50,7 +50,7 @@
 <aside class="side">\n <div class="nexus-sidebar-brand"><span class="nexus-sidebar-mark">N</span><span><b>NEXUS</b><small>WORLDWIDE · PROCUREMENT</small></span></div>
 
  <div class="student"><div class="eyebrow">Operador asignado</div><strong id="studentName">Sin identificar</strong><div class="sub" id="studentStatus">Sesión no iniciada</div></div>
- <div class="progress-label"><span>Progreso de misión</span><b id="progressText">0/30</b></div><div class="bar"><span id="progressBar"></span></div>
+ <div class="progress-label"><span>Progreso de misión</span><b id="progressText">0/35</b></div><div class="bar"><span id="progressBar"></span></div>
  <div class="nexus-primary-nav" aria-label="Navegación del centro de control">
   <button data-nexus-view="dashboard" class="active" onclick="showDash()"><span>⌂</span> Centro de control</button>
   <button data-nexus-view="briefing" onclick="showBriefing()"><span>▤</span> Briefing operativo</button>
@@ -70,7 +70,7 @@
 </header><section class="panel command-dashboard nexus-home" id="commandDashboard">
  <div class="command-head"><div><div class="eyebrow">NEXUS PROCUREMENT / OPERATIONAL OVERVIEW</div><h2>Centro de control de abastecimiento</h2><p class="muted">AquaMotion Industrial · Planta de producción · Unidad 3</p></div><div class="live-state"><span class="live-dot"></span> OPERACIÓN SIMULADA</div></div>
  <div class="command-kpis">
-  <article class="command-kpi"><span class="kpi-label">DESAFÍOS VALIDADOS</span><strong id="dashDone">00<span class="kpi-denom">/30</span></strong><span id="dashProgressCaption">Tu operación está por comenzar</span><div class="kpi-track"><i id="dashProgressBar" style="width:0%"></i></div></article>
+  <article class="command-kpi"><span class="kpi-label">DESAFÍOS VALIDADOS</span><strong id="dashDone">00<span class="kpi-denom">/35</span></strong><span id="dashProgressCaption">Tu operación está por comenzar</span><div class="kpi-track"><i id="dashProgressBar" style="width:0%"></i></div></article>
   <article class="command-kpi"><span class="kpi-label">PUNTUACIÓN ACTUAL</span><strong id="dashScore">100</strong><span>Índice académico con penalización por intentos</span><div class="kpi-track"><i id="dashScoreBar" style="width:100%"></i></div></article>
   <article class="command-kpi"><span class="kpi-label">EJES DE OPERACIÓN</span><strong>04</strong><span>Datos · Organización · Requisición · Programa</span><div class="kpi-track"><i style="width:100%"></i></div></article>
   <article class="command-kpi risk-kpi"><span class="kpi-label">ESTADO DE LA PLANTA</span><strong id="dashPlantStatus">EN ALERTA</strong><span>Materiales y fecha de producción bajo análisis</span><div class="risk-pulse"><i></i><i></i><i></i><i></i><i></i></div></article>
@@ -160,8 +160,8 @@
 <section class="panel hero" id="welcome">
  <div class="eyebrow">Caso de estudio · AquaMotion Industrial</div><h2>Una planta está a punto de detenerse. Tu equipo debe evitarlo.</h2>
  <p>La planta AquaMotion fabrica bombas de agua. Producción necesita materiales, Almacén reporta existencias, Compras debe conseguir lo faltante y Finanzas controla el presupuesto. Los datos no coinciden y la fecha límite se acerca. Tu misión es conectar sistemas, personas, requisiciones y programación para resolver el caso sin comprar de más ni provocar un paro.</p>
- <div class="chips"><span class="chip">3.2 Datos digitales</span><span class="chip">3.3 Organización</span><span class="chip">3.4 Requisición</span><span class="chip">3.5 Programación</span><span class="chip">30 retos con validación</span></div>
- <div class="grid" style="margin-top:18px"><div class="stat"><b>180–240 min</b><span class="muted">Duración estimada de la experiencia</span></div><div class="stat"><b>30 retos</b><span class="muted">Cada uno requiere validar antes de avanzar</span></div></div>
+ <div class="chips"><span class="chip">3.2 Datos digitales</span><span class="chip">3.3 Organización</span><span class="chip">3.4 Requisición</span><span class="chip">3.5 Programación</span><span class="chip">35 retos con validación</span></div>
+ <div class="grid" style="margin-top:18px"><div class="stat"><b>180–240 min</b><span class="muted">Duración estimada de la experiencia</span></div><div class="stat"><b>35 retos</b><span class="muted">Cada uno requiere validar antes de avanzar</span></div></div>
  <div class="field"><label for="fullName">Nombre completo del estudiante</label><input id="fullName" autocomplete="name" placeholder="Escribe nombre y apellidos"></div>
  <div class="field"><label for="group">Grupo / sección</label><input id="group" placeholder="Ej. 4A · Administración de Compras"></div>
  <div class="btnrow"><button class="btn primary" onclick="startMission()">Iniciar misión</button></div>
@@ -178,5 +178,5 @@
 </div>
 </main></div><footer class="foot">NEXUS Worldwide · NEXUS Procurement · Unidad 3 · Simulación académica. Los datos de AquaMotion son ficticios y se usan exclusivamente con fines didácticos.</footer>
 </div>
-<script src="./app.js?v=nexus-immersive-lab-3" defer></script>
+<script src="./app.js?v=nexus-written-challenges-4" defer></script>
 </body></html>
